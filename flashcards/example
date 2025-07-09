@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Flashcards</title>
+    <style>
+        #flashcard-container {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Review Your Flashcards</h1>
+
+    {% if flashcards %}
+        <div id="flashcard-container">
+            <p><strong id="word"></strong> – <span id="meaning"></span></p>
+        </div>
+
+        <button onclick="prevCard()">Previous</button>
+        <button onclick="nextCard()">Next</button>
+
+        <script>
+            const flashcards = [
+                {% for flashcard in flashcards %}
+                    { word: "{{ flashcard.word|escapejs }}", meaning: "{{ flashcard.meaning|escapejs }}" },
+                {% endfor %}
+            ];
+
+            let currentIndex = 0;
+
+            function showCard(index) {
+                const card = flashcards[index];
+                document.getElementById('word').textContent = card.word;
+                document.getElementById('meaning').textContent = card.meaning;
+            }
+
+            function nextCard() {
+                currentIndex = (currentIndex + 1) % flashcards.length;
+                showCard(currentIndex);
+            }
+
+            function prevCard() {
+                currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+                showCard(currentIndex);
+            }
+
+            // Show first card on load
+            window.onload = function() {
+                showCard(currentIndex);
+            };
+        </script>
+    {% else %}
+        <p>No flashcards to review today!</p>
+    {% endif %}
+
+    <p><a href="{% url 'flashcard-html' %}">Back to Home</a></p>
+</body>
+</html>

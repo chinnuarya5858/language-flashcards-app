@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    {% block content %}
+    {% load static %} 
+    <head>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <title>Add Flashcard</title>
+    </head>
+    <body>
+        <h1>Add a new Flashcard</h1>
+        <form method="POST">
+            {%csrf_token%}
+            <label>Word :</label>
+            <input type="text" name="word" required><br>
+            <label>Meaning: </label>
+            <textarea name="meaning" required></textarea><br>
+            <label>Example:</label>
+            <textarea name="example_sentences"></textarea><br>
+            <label>Langugae :</label>
+            <select name="language">
+                <option value="EN">English</option>
+                <option value="ES">Spanish</option>
+                <option value="FR">French</option>
+                <option value="DE">German</option>
+            </select><br>
+            <label>Difficulty :</label>
+            <select name="difficulty">
+                <option value="1">Easy</option>
+                <option value="2">Medium</option>
+                <option value="3">Hard</option>
+            </select><br>
+            <button type="submit">Save</button>
+        </form>
+        <script>
+            document.getElementById('flashcardForm').addEventListener('submit',async function(e){
+                e.preventDefault();
+
+                const token=localStorage.getItem('token')
+                const data={
+                    word:this.word.value,
+                    meaning:this.meaning.value,
+                    example_sentences:this.example_sentences.value,
+                    language:this.language.value,
+                    difficulty:this.difficulty.value,
+                };
+
+                const response=await fetch('api/flashcards/',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'X-CSRFToken':'{{csrf_token}}'
+                    },
+                    body:JSON.stringify(data)
+
+                });
+                if (response.ok){
+                    window.location.href='/';
+                } else{
+                    alert('Failed to save flashcard')
+                }
+
+            });
+        </script>
+        <p><a href="{% url 'flashcard-html' %}">Back to Home</a></p>
+    </body>
+    {% endblock %}
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    {% block content %}
+    {% load static %}
+    <head>
+        <title>Flashcards</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <h1>Language Learning Flashcards</h1>
+           <nav class="navbar">
+            <div class="nav-left">
+                <a href="{%url 'add_flashcard'%}">Add Flashcard</a>
+            </div>
+            <div class="nav-right">
+                <span>Welcome, {{request.user.username|default:request.user.username }}!</span>
+                <a href="{% url 'login-page' %}" class="logout-button">Log Out</a>
+            </div>
+            </nav>
+        <h2>All Flashcards</h2>
+        <div class="card-container">
+            {%for flashcard in flashcards%}
+            <div class="card">
+                <div class="front">
+                    <h3>{{ flashcard.word }}</h3>
+                    <p>Language:{{ flashcard.language }}</p>
+                </div>
+                <div class="back">
+                    <p><strong>Meaning:</strong>{{ flashcard.meaning }}</p>
+                    {% if flashcard.example_sentences %}
+                    <p><strong>Example:</strong>{{flashcard.example_sentences}}</p>
+                    {% endif %}
+                <a href="{%url 'review_flashcards' pk=flashcard.id%}">Review</a>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded',() =>{
+                document.querySelectorAll('.card').forEach(card =>{
+                    card.addEventListener('click',() =>{
+                        card.classList.toggle('flipped');
+                    });
+                });
+            });
+        </script>
+    </body>
+    {% endblock %}
+</html>

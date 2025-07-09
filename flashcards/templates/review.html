@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <title>Review Flashcards</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <h1>Review Your Flashcards</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <label>Word:</label>
+            <input type="text" name="word" value="{{flashcard.word}}"><br>
+            <label>Meaning:</label>
+            <textarea name="meaning">{{flashcard.meaning}}</textarea><br>
+            <label>Example:</label>
+            <textarea name="example_sentences">{{ flashcard.example_sentences }}</textarea>
+            <label>Language:</label>
+            <select name="language">
+                {% for code,label in flashcard.LANGUAGE_CHOICES %}
+                <option value="{{ code }}" {% if flashcard.language == code %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label>Difficulty:</label>
+            <select name="difficulty">
+                <option value="1" {% if flashcard.difficulty == 1 %}selected{% endif %}>Easy</option>
+                <option value="2" {% if flashcard.difficulty == 2 %}selected{% endif %}>Medium</option>
+                <option value="3" {% if flashcard.difficulty == 3 %}selected{% endif %}>Hard</option>
+            </select><br>
+
+            <button type="submit">Update</button>
+            <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this flashcard')">Delete</button>
+
+        </form>
+        
+        <p><a href="{% url 'flashcard-html' %}">Back to Home</a></p>
+    </body>
+</html>
