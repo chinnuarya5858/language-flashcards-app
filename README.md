@@ -1,4 +1,4 @@
-# 🧠 Language Flashcards App
+# 🧠 Language Learning Flashcard App
 
 A Django-based web application that helps users learn and review vocabulary through interactive flashcards. It supports full user authentication, CRUD operations, and RESTful APIs for flexible front-end interaction using JavaScript.
 
