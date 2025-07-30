@@ -23,7 +23,7 @@ A Django-based web application that helps users learn and review vocabulary thro
 - ✅ RESTful API endpoints for flashcard operations  
 - ✅ Interactive flashcard review using JavaScript  
 - ✅ MySQL database for persistent storage  
-- ✅ Clean and responsive interface  
+- ✅ Clean user interface  
 
 ---
 
@@ -33,12 +33,10 @@ A Django-based web application that helps users learn and review vocabulary thro
 |--------|----------|-------------|
 | `POST` | `/api/register/` | Register a new user |
 | `POST` | `/api/login/` | Login for existing users |
-| `GET`  | `/api/flashcards/` | Get all flashcards of the logged-in user |
+| `GET`  | `/api/home/` | Get all flashcards of the logged-in user |
 | `POST` | `/api/flashcards/` | Create a new flashcard |
-| `GET`  | `/api/flashcards/<int:pk>/` | Retrieve a single flashcard |
 | `PUT`  | `/api/flashcards/<int:pk>/` | Update a specific flashcard |
 | `DELETE` | `/api/flashcards/<int:pk>/` | Delete a specific flashcard |
-| `GET`  | `/api/home/` | List all flashcards of a user |
 
 ---
 
@@ -46,7 +44,7 @@ A Django-based web application that helps users learn and review vocabulary thro
 
 This project uses **Django REST Framework** and **django-allauth** for robust user authentication:
 
-- `django-allauth`: Manages user registration, login, and (optionally) social authentication.  
+- `django-allauth`: Manages user registration, login.  
 - `rest_framework.authtoken`: Provides token-based authentication for secure API access.
 
 ---
